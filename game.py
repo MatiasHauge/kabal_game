@@ -2,6 +2,7 @@ import pygame
 import sys, os
 
 pygame.init()
+pygame.font.init()
 
 WIN_WIDTH, WIN_HEIGHT = 1180, 880
 WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
@@ -13,6 +14,9 @@ FPS = 60
 # COLORS
 WHITE_COL = (255, 255, 255)
 GREEN_ONE_COL = (0, 157, 0)
+
+# Fonts
+STAND_FONT = pygame.font.SysFont('Arial-bold', 20)
 
 # The four cards holders and its variables
 right_padding = 20
@@ -41,6 +45,8 @@ ace_diamond = pygame.transform.scale(ace_diamond_image, (card_width, card_height
 ace_spades_image = pygame.image.load(os.path.join('assets', 'ace_spades.png'))
 ace_spades = pygame.transform.scale(ace_spades_image, (card_width, card_height))
 
+session_score = 0
+
 def draw_main_win():
 
     WIN.fill(GREEN_ONE_COL)
@@ -52,6 +58,10 @@ def draw_main_win():
     ace_spades_card = pygame.Rect(spades_card_holder.x, spades_card_holder.y, card_width, card_height)
 
     draw_ace_card(ace_heart_card, ace_clubs_card, ace_diamond_card, ace_spades_card)
+
+    # Score text
+    score_text = STAND_FONT.render(f"Score: {session_score}", 1, WHITE_COL)
+    WIN.blit(score_text, (WIN_WIDTH / 2, 20))
 
     pygame.display.update()
 
@@ -74,10 +84,30 @@ def draw_ace_card(ace_heart_card, ace_clubs_card, ace_diamond_card, ace_spades_c
     pygame.draw.rect(WIN, WHITE_COL, spades_card_holder)
     WIN.blit(ace_spades, (ace_spades_card.x, ace_spades_card.y))
 
-def ace_cards_movement(mouse_moved):
+def ace_cards_movement():
+    pass
 
-    if mouse_moved:
-        print("It got moved")
+def draw_regular_cards():
+    # Antall cards in each catagory
+    num_of_cards = 13
+
+    all_hearts_cards = []
+    all_clubs_cards = []
+    all_diamonds_cards = []
+    all_spades_cards = []
+
+    for hearts in range(0, num_of_cards):
+        all_hearts_cards.append(hearts)
+        # Figure how to implement each card of hearts the proper way
+
+    for clubs in range(0, num_of_cards):
+        all_clubs_cards.append(all_clubs_cards)
+
+    for diamonds in range(0, num_of_cards):
+        all_diamonds_cards.append(diamonds)
+
+    for spades in range(0, num_of_cards):
+        all_spades_cards.append(spades)
 
 def main_loop():
 
@@ -91,12 +121,16 @@ def main_loop():
                 pygame.quit()
                 sys.exit()
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    # Figure out a way to make cards be dragged with mouse
+                    pass
 
-        mouse_moved = pygame.mouse.get_pressed()
+        #mouse_moved = pygame.mouse.get_pressed()
 
         clock.tick(FPS)
         draw_main_win()
-        ace_cards_movement(mouse_moved)
+        ace_cards_movement()
 
 if __name__ == '__main__':
 
